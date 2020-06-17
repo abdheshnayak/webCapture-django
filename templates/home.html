@@ -1,0 +1,66 @@
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <title>WebSnap | Abdhesh Nayak</title>
+        <style>
+            #tksnp{
+                display: inline-block;
+                background: black;
+                padding: .3em;
+                font-size: 1em;
+                font-weight: bold;
+                margin: 0.2em;
+                color: white;
+                border-radius: 0.3em;
+            }
+            #op{
+                width: 95%;
+                display:block;
+                margin: 0.5em auto;
+                margin-top: 1em;
+                border: 2px solid black;
+            }
+            body{
+                padding-top: 1em;
+                text-align: center;
+            }
+            #loading{
+                font-weight: bold;
+                margin: 1em;
+                display: none;
+            }
+        </style>
+    </head>
+    <body>
+        <span>URL :</span>
+        <input id="inpTag" type="text" placeholder="https://kamla.com.np">
+        <span id="tksnp">take snapshot</span>
+        <br>
+        <span id="loading">Loading...</span>
+        <img id="op" src="" alt="redDot">
+    </body>
+    <script>
+        function makeid(length) {
+            var result           = '';
+            var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+            var charactersLength = characters.length;
+            for ( var i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+        function refresh(url_add){
+            $("#loading").css("display","block");
+            $.get('snap',{
+              url : url_add,
+            }, function(data) {
+                $("#op").attr("src",data+"?"+makeid(5));
+                $("#loading").css("display","none");
+            });
+        }
+        refresh("https:kamla.com.np");
+        $("#tksnp").click(function(){
+            refresh($("#inpTag").val());
+        })
+    </script>
+</html>
